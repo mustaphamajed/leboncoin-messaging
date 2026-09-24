@@ -1,30 +1,68 @@
 import { isSameDay } from '@/lib'
 import type { Message } from '@/services'
+import type { OutgoingMessage } from "./hooks/useOutgoingMessages";
+import type { DeliveryStatus } from "./types";
 
 export interface TimelineItem {
-  key: string
-  body: string
-  timestamp: number
-  authorId: number
-  isOwn: boolean
-  startsNewDay: boolean
-  showAuthor: boolean
+  key: string;
+  body: string;
+  timestamp: number;
+  authorId: number;
+  isOwn: boolean;
+  status: DeliveryStatus;
+  startsNewDay: boolean;
+  showAuthor: boolean;
+  outgoing?: OutgoingMessage;
 }
 
-export function buildTimeline(messages: Message[], currentUserId: number): TimelineItem[] {
-  return messages.map((message, index) => {
-    const previous = messages[index - 1]
-    const isOwn = message.authorId === currentUserId
-    const startsNewDay = !previous || !isSameDay(previous.timestamp, message.timestamp)
+type UngroupedItem = Omit<TimelineItem, "startsNewDay" | "showAuthor">;
 
+const fromMessage = (
+  message: Message,
+  currentUserId: number,
+): UngroupedItem => ({
+  key: `message-${message.id}`,
+  body: message.body,
+  timestamp: message.timestamp,
+  authorId: message.authorId,
+  isOwn: message.authorId === currentUserId,
+  status: "sent",
+});
+
+const fromOutgoing = (
+  outgoing: OutgoingMessage,
+  currentUserId: number,
+): UngroupedItem => ({
+  key: `outgoing-${outgoing.mutationId}`,
+  body: outgoing.input.body.trim(),
+  timestamp: Math.floor(outgoing.submittedAt / 1000),
+  authorId: currentUserId,
+  isOwn: true,
+  status: outgoing.status,
+  outgoing,
+});
+
+export function buildTimeline(
+  messages: Message[],
+  outgoingMessages: OutgoingMessage[],
+  currentUserId: number,
+): TimelineItem[] {
+  const items = [
+    ...messages.map((message) => fromMessage(message, currentUserId)),
+    ...outgoingMessages.map((outgoing) =>
+      fromOutgoing(outgoing, currentUserId),
+    ),
+  ];
+
+  return items.map((item, index) => {
+    const previous = items[index - 1];
+    const startsNewDay =
+      !previous || !isSameDay(previous.timestamp, item.timestamp);
     return {
-      key: `message-${message.id}`,
-      body: message.body,
-      timestamp: message.timestamp,
-      authorId: message.authorId,
-      isOwn,
+      ...item,
       startsNewDay,
-      showAuthor: !isOwn && (startsNewDay || previous.authorId !== message.authorId),
-    }
-  })
+      showAuthor:
+        !item.isOwn && (startsNewDay || previous.authorId !== item.authorId),
+    };
+  });
 }

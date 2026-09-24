@@ -2,9 +2,12 @@ import { useCallback, useLayoutEffect, useRef } from 'react'
 
 const NEAR_BOTTOM_THRESHOLD_PX = 80
 
-export function useStickToBottom<TElement extends HTMLElement>(contentVersion: unknown) {
+// Keeps the newest message in view, unless the user scrolled up to read older messages.
+// Sending a message always scrolls down, wherever the user was.
+export function useStickToBottom<TElement extends HTMLElement>(contentVersion: unknown, ownContentCount: number) {
   const containerRef = useRef<TElement>(null)
   const isNearBottomRef = useRef(true)
+  const previousOwnContentCountRef = useRef(ownContentCount)
 
   const onScroll = useCallback(() => {
     const container = containerRef.current
@@ -15,10 +18,14 @@ export function useStickToBottom<TElement extends HTMLElement>(contentVersion: u
 
   useLayoutEffect(() => {
     const container = containerRef.current
-    if (container && isNearBottomRef.current) {
+    const hasNewOwnContent = ownContentCount > previousOwnContentCountRef.current
+    previousOwnContentCountRef.current = ownContentCount
+
+    if (container && (isNearBottomRef.current || hasNewOwnContent)) {
       container.scrollTop = container.scrollHeight
+      isNearBottomRef.current = true
     }
-  }, [contentVersion])
+  }, [contentVersion, ownContentCount])
 
   return { containerRef, onScroll }
 }

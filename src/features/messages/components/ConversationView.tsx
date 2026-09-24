@@ -4,6 +4,7 @@ import { useConversation } from '@/features/conversations'
 import { getOtherParticipant } from '@/lib'
 import { ConversationHeader } from './ConversationHeader'
 import { ConversationNotFound } from './ConversationNotFound'
+import { MessageComposer } from './MessageComposer'
 import { MessageList } from './MessageList'
 
 export function ConversationView({ conversationId }: { conversationId: number }) {
@@ -32,6 +33,7 @@ export function ConversationView({ conversationId }: { conversationId: number })
           <title>{`${participant.nickname} · Messages · leboncoin`}</title>
           <ConversationHeader participant={participant} lastMessageTimestamp={conversation.lastMessageTimestamp} />
           <MessageList conversationId={conversation.id} currentUserId={currentUserId} participant={participant} />
+          <MessageComposer conversationId={conversation.id} recipientName={participant.nickname} />
         </div>
       )}
     </>

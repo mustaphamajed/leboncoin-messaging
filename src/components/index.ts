@@ -1,4 +1,5 @@
 export * from './Avatar'
+export * from './BackLink'
 export * from './EmptyState'
 export * from './ErrorState'
 export * from './FullPageSpinner'

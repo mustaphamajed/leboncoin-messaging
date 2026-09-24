@@ -1,29 +1,26 @@
 import { cn, formatTime, toIsoString } from '@/lib'
-import type { DeliveryStatus } from "../types";
+import type { DeliveryStatus } from '../types'
 
 interface MessageBubbleProps {
-  body: string;
-  timestamp: number;
-  authorName: string;
-  isOwn: boolean;
-  showAuthor: boolean;
-  status?: DeliveryStatus;
-  onRetry?: () => void;
-  onDiscard?: () => void;
+  body: string
+  timestamp: number
+  authorName: string
+  isOwn: boolean
+  showAuthor: boolean
+  status?: DeliveryStatus
+  onRetry?: () => void
+  onDiscard?: () => void
 }
 
-const statusConfig: Record<
-  DeliveryStatus,
-  { bubbleClassName?: string; label?: string }
-> = {
+const statusConfig: Record<DeliveryStatus, { bubbleClassName?: string; label?: string }> = {
   sent: {},
-  sending: { bubbleClassName: "opacity-70", label: "Envoi…" },
-  waiting: { bubbleClassName: "opacity-70", label: "En attente de connexion…" },
-  failed: { bubbleClassName: "ring-2 ring-red-600 ring-offset-1" },
-};
+  sending: { bubbleClassName: 'opacity-70', label: 'Envoi…' },
+  waiting: { bubbleClassName: 'opacity-70', label: 'En attente de connexion…' },
+  failed: { bubbleClassName: 'ring-2 ring-red-600 ring-offset-1' },
+}
 
 const actionClassName =
-  "font-medium underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700";
+  'font-medium underline-offset-2 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-700'
 
 export function MessageBubble({
   body,
@@ -31,17 +28,17 @@ export function MessageBubble({
   authorName,
   isOwn,
   showAuthor,
-  status = "sent",
+  status = 'sent',
   onRetry,
   onDiscard,
 }: MessageBubbleProps) {
-  const { bubbleClassName, label } = statusConfig[status];
+  const { bubbleClassName, label } = statusConfig[status]
 
   return (
     <li
       className={cn(
-        "flex max-w-[80%] flex-col md:max-w-[65%]",
-        isOwn ? "items-end self-end" : "items-start self-start",
+        'flex max-w-[80%] flex-col md:max-w-[65%]',
+        isOwn ? 'items-end self-end' : 'items-start self-start',
       )}
     >
       {showAuthor && (
@@ -51,29 +48,22 @@ export function MessageBubble({
       )}
       <p
         className={cn(
-          "rounded-2xl px-4 py-2 wrap-break-word whitespace-pre-wrap",
-          isOwn
-            ? "rounded-br-sm bg-bubble-own text-white"
-            : "rounded-bl-sm bg-bubble-other text-gray-900",
+          'rounded-2xl px-4 py-2 wrap-break-word whitespace-pre-wrap',
+          isOwn ? 'rounded-br-sm bg-bubble-own text-white' : 'rounded-bl-sm bg-bubble-other text-gray-900',
           bubbleClassName,
         )}
       >
-        <span className="sr-only">{isOwn ? "Vous" : authorName} : </span>
+        <span className="sr-only">{isOwn ? 'Vous' : authorName} : </span>
         {body}
       </p>
 
-      {status === "sent" && (
-        <time
-          dateTime={toIsoString(timestamp)}
-          className="mt-1 px-1 text-xs text-gray-500"
-        >
+      {status === 'sent' && (
+        <time dateTime={toIsoString(timestamp)} className="mt-1 px-1 text-xs text-gray-500">
           {formatTime(timestamp)}
         </time>
       )}
-      {label && (
-        <span className="mt-1 px-1 text-xs text-gray-500">{label}</span>
-      )}
-      {status === "failed" && (
+      {label && <span className="mt-1 px-1 text-xs text-gray-500">{label}</span>}
+      {status === 'failed' && (
         <span className="mt-1 flex gap-3 px-1 text-xs text-red-700">
           <span>Non envoyé.</span>
           <button type="button" onClick={onRetry} className={actionClassName}>
@@ -85,5 +75,5 @@ export function MessageBubble({
         </span>
       )}
     </li>
-  );
+  )
 }

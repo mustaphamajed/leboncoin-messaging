@@ -7,11 +7,7 @@ export function NotFoundPage() {
       <EmptyState
         title="Page introuvable"
         description="La page que vous cherchez n’existe pas."
-        action={
-          <TextLink to="/">
-            Aller aux messages
-          </TextLink>
-        }
+        action={<TextLink to="/">Aller aux messages</TextLink>}
       />
     </main>
   )

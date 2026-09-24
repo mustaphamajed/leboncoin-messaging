@@ -7,7 +7,6 @@ import { apiUrl } from '@/test/msw/utils'
 import { MESSAGE_MAX_LENGTH } from './message.schema'
 import { getMessages, sendMessage } from './message.service'
 
-
 describe('getMessages', () => {
   it('returns the messages of the conversation', async () => {
     server.use(http.get(apiUrl('/messages/1'), () => HttpResponse.json(messages)))

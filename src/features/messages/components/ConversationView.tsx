@@ -9,7 +9,15 @@ import { MessageList } from './MessageList'
 
 export function ConversationView({ conversationId }: { conversationId: number }) {
   const currentUserId = useCurrentUserId()
-  const { data: conversation, error, isPending, isError, isSuccess, refetch, isFetching } = useConversation(conversationId)
+  const {
+    data: conversation,
+    error,
+    isPending,
+    isError,
+    isSuccess,
+    refetch,
+    isFetching,
+  } = useConversation(conversationId)
   const participant = conversation && getOtherParticipant(conversation, currentUserId)
 
   return (

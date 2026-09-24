@@ -65,7 +65,13 @@ describe('buildTimeline', () => {
     const timeline = buildTimeline([message(1, 2, MONDAY_9AM)], [outgoing(7), failed], 1)
 
     expect(timeline.slice(1)).toEqual([
-      expect.objectContaining({ key: 'outgoing-7', body: 'outgoing 7', isOwn: true, status: 'sending', showAuthor: false }),
+      expect.objectContaining({
+        key: 'outgoing-7',
+        body: 'outgoing 7',
+        isOwn: true,
+        status: 'sending',
+        showAuthor: false,
+      }),
       expect.objectContaining({ key: 'outgoing-8', status: 'failed', outgoing: failed }),
     ])
   })

@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom/vitest'
-import { onlineManager } from "@tanstack/react-query";
+import { onlineManager } from '@tanstack/react-query'
 import { cleanup } from '@testing-library/react'
 import { afterAll, afterEach, beforeAll } from 'vitest'
 import { resetDb } from './msw/db'
@@ -14,7 +14,7 @@ afterEach(() => {
   server.resetHandlers()
   resetDb()
   localStorage.clear()
-  onlineManager.setOnline(true);
+  onlineManager.setOnline(true)
 })
 
 afterAll(() => {

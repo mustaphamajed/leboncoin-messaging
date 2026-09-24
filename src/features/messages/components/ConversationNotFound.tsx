@@ -7,11 +7,7 @@ export function ConversationNotFound() {
       <EmptyState
         title="Conversation introuvable"
         description="Cette conversation n’existe pas ou le lien est invalide."
-        action={
-          <TextLink to="/">
-            Retour aux conversations
-          </TextLink>
-        }
+        action={<TextLink to="/">Retour aux conversations</TextLink>}
       />
     </>
   )

@@ -20,7 +20,7 @@ describe('httpClient', () => {
     expect(error).toMatchObject({ kind: 'http', status: 404, isRetryable: false })
   })
 
-    it('throws a retryable http error on 5xx', async () => {
+  it('throws a retryable http error on 5xx', async () => {
     server.use(http.get(apiUrl('/x'), () => new HttpResponse(null, { status: 503 })))
     const error = await httpClient.get('/x', schema).catch((e) => e)
     expect(error).toMatchObject({ kind: 'http', status: 503, isRetryable: true })
@@ -33,17 +33,20 @@ describe('httpClient', () => {
   })
 
   it('throws a retryable timeout error when the server is too slow', async () => {
-    server.use(http.get(apiUrl('/x'), async () => {
-      await delay(200)
-      return HttpResponse.json({ id: 1 })
-    }))
+    server.use(
+      http.get(apiUrl('/x'), async () => {
+        await delay(200)
+        return HttpResponse.json({ id: 1 })
+      }),
+    )
     const error = await httpClient.get('/x', schema, { timeoutMs: 20 }).catch((e) => e)
     expect(error).toMatchObject({ kind: 'timeout', isRetryable: true })
   })
 
   it('throws an invalid-response error on malformed JSON', async () => {
-    server.use(http.get(apiUrl('/x'), () =>
-      new HttpResponse('{not json', { headers: { 'Content-Type': 'application/json' } })))
+    server.use(
+      http.get(apiUrl('/x'), () => new HttpResponse('{not json', { headers: { 'Content-Type': 'application/json' } })),
+    )
     const error = await httpClient.get('/x', schema).catch((e) => e)
     expect(error).toMatchObject({ kind: 'invalid-response', isRetryable: false })
   })
@@ -56,10 +59,12 @@ describe('httpClient', () => {
   })
 
   it('rethrows cancellations untouched instead of wrapping them', async () => {
-    server.use(http.get(apiUrl('/x'), async () => {
-      await delay(200)
-      return HttpResponse.json({ id: 1 })
-    }))
+    server.use(
+      http.get(apiUrl('/x'), async () => {
+        await delay(200)
+        return HttpResponse.json({ id: 1 })
+      }),
+    )
     const controller = new AbortController()
     const promise = httpClient.get('/x', schema, { signal: controller.signal }).catch((e) => e)
     controller.abort()
@@ -70,10 +75,12 @@ describe('httpClient', () => {
 
   it('sends the body with post', async () => {
     let body: unknown
-    server.use(http.post(apiUrl('/items'), async ({ request }) => {
-      body = await request.json()
-      return HttpResponse.json({ id: 2 }, { status: 201 })
-    }))
+    server.use(
+      http.post(apiUrl('/items'), async ({ request }) => {
+        body = await request.json()
+        return HttpResponse.json({ id: 2 }, { status: 201 })
+      }),
+    )
     await expect(httpClient.post('/items', { text: 'hi' }, schema)).resolves.toEqual({ id: 2 })
     expect(body).toEqual({ text: 'hi' })
   })
@@ -93,5 +100,4 @@ describe('ApiError.isRetryable', () => {
   ] as const)('%o → %s', (options, expected) => {
     expect(new ApiError('x', options).isRetryable).toBe(expected)
   })
-
 })

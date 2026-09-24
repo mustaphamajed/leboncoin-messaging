@@ -15,7 +15,8 @@ export function ConversationHeader({ participant, lastMessageTimestamp }: Conver
       <div className="flex min-w-0 flex-col">
         <h2 className="truncate font-semibold">{participant.nickname}</h2>
         <p className="text-sm text-gray-600">
-          Dernier message : <time dateTime={toIsoString(lastMessageTimestamp)}>{formatRelativeDate(lastMessageTimestamp)}</time>
+          Dernier message :{' '}
+          <time dateTime={toIsoString(lastMessageTimestamp)}>{formatRelativeDate(lastMessageTimestamp)}</time>
         </p>
       </div>
     </header>

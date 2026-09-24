@@ -26,7 +26,9 @@ describe('installFailureSimulation', () => {
   }
 
   it('fails the request with a 503 when the draw is below the rate', async () => {
-    const error = await createInstance(() => 0.1).get(apiUrl('/users')).catch((e: unknown) => e)
+    const error = await createInstance(() => 0.1)
+      .get(apiUrl('/users'))
+      .catch((e: unknown) => e)
 
     expect(axios.isAxiosError(error) && error.response?.status).toBe(503)
   })

@@ -25,7 +25,8 @@ export default defineConfig([
           patterns: [
             {
               group: ['@/services/*', '@/lib/*', '@/components/*', '@/context/*', '@/features/*/*'],
-              message: 'Import from the folder index (e.g. "@/services" or "@/features/messages") instead of a deep path.',
+              message:
+                'Import from the folder index (e.g. "@/services" or "@/features/messages") instead of a deep path.',
             },
           ],
         },

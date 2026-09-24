@@ -24,11 +24,7 @@ export function ConversationList() {
         <EmptyState
           title="Aucune conversation pour le moment"
           description="Vos conversations avec les autres utilisateurs apparaîtront ici."
-          action={
-            <TextLink to="/conversations/new">
-              Démarrer une conversation
-            </TextLink>
-          }
+          action={<TextLink to="/conversations/new">Démarrer une conversation</TextLink>}
         />
       )}
 

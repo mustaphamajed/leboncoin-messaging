@@ -5,7 +5,12 @@ const timeFormat = new Intl.DateTimeFormat(LOCALE, { hour: '2-digit', minute: '2
 const weekdayFormat = new Intl.DateTimeFormat(LOCALE, { weekday: 'long' })
 const dayMonthFormat = new Intl.DateTimeFormat(LOCALE, { day: 'numeric', month: 'short' })
 const fullDateFormat = new Intl.DateTimeFormat(LOCALE, { day: 'numeric', month: 'short', year: 'numeric' })
-const longDateFormat = new Intl.DateTimeFormat(LOCALE, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+const longDateFormat = new Intl.DateTimeFormat(LOCALE, {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+})
 
 // French writes weekdays in lower case, but they start the label here.
 const capitalize = (text: string) => text.charAt(0).toLocaleUpperCase(LOCALE) + text.slice(1)
@@ -16,7 +21,8 @@ export const toIsoString = (timestamp: number) => fromUnixSeconds(timestamp).toI
 
 const startOfDay = (date: Date) => new Date(date.getFullYear(), date.getMonth(), date.getDate())
 
-const daysBetween = (from: Date, to: Date) => Math.round((startOfDay(to).getTime() - startOfDay(from).getTime()) / DAY_MS)
+const daysBetween = (from: Date, to: Date) =>
+  Math.round((startOfDay(to).getTime() - startOfDay(from).getTime()) / DAY_MS)
 
 export const isSameDay = (a: number, b: number) => daysBetween(fromUnixSeconds(a), fromUnixSeconds(b)) === 0
 

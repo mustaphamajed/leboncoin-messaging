@@ -29,7 +29,9 @@ describe('ConnectionBanner', () => {
   })
 
   it('reassures the user while the servers are failing and hides once they recover', async () => {
-    server.use(http.get(apiUrl('/conversations/:userId'), () => new HttpResponse(null, { status: 503 }), { once: true }))
+    server.use(
+      http.get(apiUrl('/conversations/:userId'), () => new HttpResponse(null, { status: 503 }), { once: true }),
+    )
     const { user } = renderRoute('/')
     const banner = await findBanner()
 

@@ -22,7 +22,10 @@ describe('routes', () => {
   it('lets keyboard users skip to the main content', async () => {
     renderRoute('/')
 
-    expect(await screen.findByRole('link', { name: 'Aller au contenu principal' })).toHaveAttribute('href', '#main-content')
+    expect(await screen.findByRole('link', { name: 'Aller au contenu principal' })).toHaveAttribute(
+      'href',
+      '#main-content',
+    )
     expect(screen.getByRole('main')).toHaveAttribute('id', 'main-content')
   })
 })

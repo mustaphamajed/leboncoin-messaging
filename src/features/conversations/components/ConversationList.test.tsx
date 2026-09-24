@@ -47,11 +47,15 @@ describe('ConversationList', () => {
     server.use(http.get(apiUrl('/conversations/:userId'), () => HttpResponse.json([])))
     renderRoute('/')
 
-    expect(await within(getSidebar()).findByRole('heading', { name: 'Aucune conversation pour le moment' })).toBeInTheDocument()
+    expect(
+      await within(getSidebar()).findByRole('heading', { name: 'Aucune conversation pour le moment' }),
+    ).toBeInTheDocument()
   })
 
   it('shows an error with a retry button when the server fails', async () => {
-    server.use(http.get(apiUrl('/conversations/:userId'), () => new HttpResponse(null, { status: 503 }), { once: true }))
+    server.use(
+      http.get(apiUrl('/conversations/:userId'), () => new HttpResponse(null, { status: 503 }), { once: true }),
+    )
     const { user } = renderRoute('/')
 
     const alert = await within(getSidebar()).findByRole('alert')

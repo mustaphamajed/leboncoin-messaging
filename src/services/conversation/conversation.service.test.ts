@@ -6,7 +6,6 @@ import { server } from '@/test/msw/server'
 import { apiUrl } from '@/test/msw/utils'
 import { createConversation, getConversations } from './conversation.service'
 
-
 describe('getConversations', () => {
   it("returns the user's conversations", async () => {
     server.use(http.get(apiUrl('/conversations/1'), () => HttpResponse.json(conversations)))

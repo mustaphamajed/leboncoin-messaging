@@ -101,11 +101,17 @@ export function NewConversation() {
       )}
 
       {isReady && !currentUser && (
-        <EmptyState title="Profil indisponible" description="Nous n’avons pas trouvé votre profil. Veuillez réessayer plus tard." />
+        <EmptyState
+          title="Profil indisponible"
+          description="Nous n’avons pas trouvé votre profil. Veuillez réessayer plus tard."
+        />
       )}
 
       {isReady && currentUser && candidates.length === 0 && (
-        <EmptyState title="Aucun utilisateur trouvé" description={`Aucun utilisateur ne correspond à « ${search.trim()} ».`} />
+        <EmptyState
+          title="Aucun utilisateur trouvé"
+          description={`Aucun utilisateur ne correspond à « ${search.trim()} ».`}
+        />
       )}
 
       {isReady && currentUser && candidates.length > 0 && (

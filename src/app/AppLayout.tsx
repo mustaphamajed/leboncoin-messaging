@@ -28,8 +28,8 @@ export function AppLayout() {
         <aside
           aria-label="Conversations"
           className={cn(
-            "w-full flex-col border-gray-200 md:flex md:w-80 md:border-r lg:w-96",
-            isConversationOpen ? "hidden" : "flex",
+            'w-full flex-col border-gray-200 md:flex md:w-80 md:border-r lg:w-96',
+            isConversationOpen ? 'hidden' : 'flex',
           )}
         >
           <div className="flex items-center justify-between px-4 py-3">
@@ -57,14 +57,11 @@ export function AppLayout() {
         <main
           id="main-content"
           tabIndex={-1}
-          className={cn(
-            "min-w-0 flex-1 flex-col outline-none md:flex",
-            isConversationOpen ? "flex" : "hidden",
-          )}
+          className={cn('min-w-0 flex-1 flex-col outline-none md:flex', isConversationOpen ? 'flex' : 'hidden')}
         >
           <Outlet />
         </main>
       </div>
     </div>
-  );
+  )
 }

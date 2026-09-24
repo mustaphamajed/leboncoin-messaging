@@ -4,7 +4,7 @@ export function SelectConversationPage() {
   return (
     <>
       <title>Messages · leboncoin</title>
-      <EmptyState title="Select a conversation" description="Choose a conversation from the list to read and send messages." />
+      <EmptyState title="Sélectionnez une conversation" description="Choisissez une conversation dans la liste pour lire et envoyer des messages." />
     </>
   )
 }

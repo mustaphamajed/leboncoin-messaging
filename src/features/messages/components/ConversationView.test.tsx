@@ -6,7 +6,7 @@ import { server } from '@/test/msw/server'
 import { apiUrl } from '@/test/msw/utils'
 import { renderRoute } from '@/test/renderRoute'
 
-const findMessageLog = () => screen.findByRole('log', { name: 'Messages with Jeremie' })
+const findMessageLog = () => screen.findByRole('log', { name: 'Messages avec Jeremie' })
 
 describe('ConversationView', () => {
   it('shows the other participant and the date of the last message in the header', async () => {
@@ -14,7 +14,7 @@ describe('ConversationView', () => {
 
     const header = (await screen.findByRole('heading', { name: 'Jeremie' })).closest('header')!
 
-    expect(within(header).getByText(/Last message/)).toHaveTextContent('Last message 7 juil. 2021')
+    expect(within(header).getByText(/Dernier message/)).toHaveTextContent('Dernier message : 7 juil. 2021')
     await waitFor(() => expect(document.title).toBe('Jeremie · Messages · leboncoin'))
   })
 
@@ -25,17 +25,17 @@ describe('ConversationView', () => {
     const items = within(await findMessageLog()).getAllByRole('listitem')
 
     expect(items.map((item) => item.textContent)).toEqual([
-      'mercredi 7 juillet 2021',
-      'You: Bonjour06:04',
-      expect.stringContaining('Jeremie: Salut !'),
+      'Mercredi 7 juillet 2021',
+      'Vous : Bonjour06:04',
+      expect.stringContaining('Jeremie : Salut !'),
     ])
   })
 
   it('shows an empty state when the conversation has no message', async () => {
     renderRoute('/conversations/3')
 
-    expect(await screen.findByRole('heading', { name: 'No messages yet' })).toBeInTheDocument()
-    expect(screen.getByText('Say hello to Elodie!')).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Aucun message pour le moment' })).toBeInTheDocument()
+    expect(screen.getByText('Dites bonjour à Elodie !')).toBeInTheDocument()
   })
 
   it('does not load messages of a conversation the user is not part of', async () => {
@@ -48,14 +48,14 @@ describe('ConversationView', () => {
     )
     renderRoute('/conversations/1', { userId: 3 })
 
-    expect(await screen.findByRole('heading', { name: 'Conversation not found' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Conversation introuvable' })).toBeInTheDocument()
     expect(messagesRequested).toBe(false)
   })
 
   it.each(['abc', '0', '-1', '1.5'])('shows a not found state for the invalid conversation id "%s"', async (id) => {
     renderRoute(`/conversations/${id}`)
 
-    expect(await screen.findByRole('heading', { name: 'Conversation not found' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Conversation introuvable' })).toBeInTheDocument()
   })
 
   it('shows an error with a retry button when messages fail to load', async () => {
@@ -63,9 +63,9 @@ describe('ConversationView', () => {
     const { user } = renderRoute('/conversations/1')
 
     const alert = await screen.findByRole('alert')
-    expect(alert).toHaveTextContent('Messages unavailable')
+    expect(alert).toHaveTextContent('Messages indisponibles')
 
-    await user.click(within(alert).getByRole('button', { name: 'Try again' }))
+    await user.click(within(alert).getByRole('button', { name: 'Réessayer' }))
 
     expect(await findMessageLog()).toBeInTheDocument()
   })
@@ -76,14 +76,14 @@ describe('ConversationView', () => {
 
     const main = await screen.findByRole('main')
 
-    expect(await within(main).findByRole('alert')).toHaveTextContent('Conversation unavailable')
+    expect(await within(main).findByRole('alert')).toHaveTextContent('Conversation indisponible')
   })
 
   it('offers a way back to the list on small screens', async () => {
     const { user } = renderRoute('/conversations/1')
 
-    await user.click(await screen.findByRole('link', { name: 'Back to conversations' }))
+    await user.click(await screen.findByRole('link', { name: 'Retour aux conversations' }))
 
-    expect(await screen.findByRole('heading', { name: 'Select a conversation' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Sélectionnez une conversation' })).toBeInTheDocument()
   })
 })

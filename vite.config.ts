@@ -12,7 +12,7 @@ export default defineConfig({
   },
   test: {
     environment: "jsdom",
-    env: { TZ: "UTC" },
+    env: { TZ: "UTC", VITE_SIMULATED_FAILURE_RATE: "0" },
     setupFiles: ["./src/test/setup.ts"],
     css: false,
     restoreMocks: true,

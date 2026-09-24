@@ -18,13 +18,13 @@ export function ConversationHeader({ participant, lastMessageTimestamp }: Conver
         <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 18l-6-6 6-6" />
         </svg>
-        <span className="sr-only">Back to conversations</span>
+        <span className="sr-only">Retour aux conversations</span>
       </Link>
       <Avatar id={participant.id} name={participant.nickname} />
       <div className="flex min-w-0 flex-col">
         <h2 className="truncate font-semibold">{participant.nickname}</h2>
         <p className="text-sm text-gray-600">
-          Last message <time dateTime={toIsoString(lastMessageTimestamp)}>{formatRelativeDate(lastMessageTimestamp)}</time>
+          Dernier message : <time dateTime={toIsoString(lastMessageTimestamp)}>{formatRelativeDate(lastMessageTimestamp)}</time>
         </p>
       </div>
     </header>

@@ -10,9 +10,9 @@ export function NewConversationHeader() {
         <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M15 18l-6-6 6-6" />
         </svg>
-        <span className="sr-only">Back to conversations</span>
+        <span className="sr-only">Retour aux conversations</span>
       </Link>
-      <h2 className="font-semibold">New conversation</h2>
+      <h2 className="font-semibold">Nouvelle conversation</h2>
     </header>
   )
 }

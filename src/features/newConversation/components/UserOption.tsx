@@ -20,8 +20,8 @@ export function UserOption({ user, hasConversation, isStarting, disabled, onSele
       >
         <Avatar id={user.id} name={user.nickname} />
         <span className="min-w-0 flex-1 truncate font-medium">{user.nickname}</span>
-        {isStarting && <span className="text-sm text-gray-600">Starting…</span>}
-        {!isStarting && hasConversation && <span className="text-sm text-gray-600">Open conversation</span>}
+        {isStarting && <span className="text-sm text-gray-600">Création…</span>}
+        {!isStarting && hasConversation && <span className="text-sm text-gray-600">Ouvrir la conversation</span>}
       </button>
     </li>
   )

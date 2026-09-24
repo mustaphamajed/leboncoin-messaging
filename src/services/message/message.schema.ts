@@ -21,8 +21,8 @@ export const sendMessageInputSchema = z.object({
   body: z
     .string()
     .trim()
-    .min(1, 'Message cannot be empty')
-    .max(MESSAGE_MAX_LENGTH, `Message cannot exceed ${MESSAGE_MAX_LENGTH} characters`),
+    .min(1, 'Le message ne peut pas être vide')
+    .max(MESSAGE_MAX_LENGTH, `Le message ne peut pas dépasser ${MESSAGE_MAX_LENGTH} caractères`),
 })
 
 export type SendMessageInput = z.input<typeof sendMessageInputSchema>

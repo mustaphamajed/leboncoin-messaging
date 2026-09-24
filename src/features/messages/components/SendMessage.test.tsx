@@ -8,8 +8,8 @@ import { server } from '@/test/msw/server'
 import { apiUrl } from '@/test/msw/utils'
 import { renderRoute } from '@/test/renderRoute'
 
-const getComposer = () => screen.findByRole('textbox', { name: 'Message to Jeremie' })
-const getMessageLog = () => screen.findByRole('log', { name: 'Messages with Jeremie' })
+const getComposer = () => screen.findByRole('textbox', { name: 'Message à Jeremie' })
+const getMessageLog = () => screen.findByRole('log', { name: 'Messages avec Jeremie' })
 
 function deferredResponse() {
   let resolve!: () => void
@@ -39,7 +39,7 @@ describe('sending a message', () => {
     const { user } = renderRoute('/conversations/1')
 
     await user.type(await getComposer(), 'Hello')
-    await user.click(screen.getByRole('button', { name: 'Send message' }))
+    await user.click(screen.getByRole('button', { name: 'Envoyer le message' }))
 
     expect(await within(await getMessageLog()).findByText('Hello')).toBeInTheDocument()
   })
@@ -55,7 +55,7 @@ describe('sending a message', () => {
 
   it('does not allow sending an empty message', async () => {
     const { user } = renderRoute('/conversations/1')
-    const sendButton = await screen.findByRole('button', { name: 'Send message' })
+    const sendButton = await screen.findByRole('button', { name: 'Envoyer le message' })
 
     expect(sendButton).toBeDisabled()
 
@@ -78,12 +78,12 @@ describe('sending a message', () => {
 
     const log = await getMessageLog()
     expect(within(log).getByText('On my way')).toBeInTheDocument()
-    expect(within(log).getByText('Sending…')).toBeInTheDocument()
+    expect(within(log).getByText('Envoi…')).toBeInTheDocument()
 
     release()
 
     expect(await within(log).findByText('On my way')).toBeInTheDocument()
-    await expect.poll(() => within(log).queryByText('Sending…')).toBeNull()
+    await expect.poll(() => within(log).queryByText('Envoi…')).toBeNull()
   })
 
   it('keeps a failed message with the option to retry it', async () => {
@@ -93,11 +93,11 @@ describe('sending a message', () => {
     await user.type(await getComposer(), 'Are you there?{Enter}')
 
     const log = await getMessageLog()
-    expect(await within(log).findByText('Not sent.')).toBeInTheDocument()
+    expect(await within(log).findByText('Non envoyé.')).toBeInTheDocument()
 
-    await user.click(within(log).getByRole('button', { name: 'Retry' }))
+    await user.click(within(log).getByRole('button', { name: 'Renvoyer' }))
 
-    await expect.poll(() => within(log).queryByText('Not sent.')).toBeNull()
+    await expect.poll(() => within(log).queryByText('Non envoyé.')).toBeNull()
     expect(within(log).getByText('Are you there?')).toBeInTheDocument()
   })
 
@@ -108,7 +108,7 @@ describe('sending a message', () => {
     await user.type(await getComposer(), 'Oops{Enter}')
 
     const log = await getMessageLog()
-    await user.click(await within(log).findByRole('button', { name: 'Delete' }))
+    await user.click(await within(log).findByRole('button', { name: 'Supprimer' }))
 
     expect(within(log).queryByText('Oops')).not.toBeInTheDocument()
   })
@@ -122,12 +122,12 @@ describe('sending a message', () => {
     await user.type(composer, 'See you tomorrow{Enter}')
 
     const log = await getMessageLog()
-    expect(await within(log).findByText('Waiting for connection…')).toBeInTheDocument()
+    expect(await within(log).findByText('En attente de connexion…')).toBeInTheDocument()
     expect(isSaved()).toBe(false)
 
     act(() => onlineManager.setOnline(true))
 
-    await expect.poll(() => within(log).queryByText('Waiting for connection…')).toBeNull()
+    await expect.poll(() => within(log).queryByText('En attente de connexion…')).toBeNull()
     expect(isSaved()).toBe(true)
     expect(within(log).getByText('See you tomorrow')).toBeInTheDocument()
   })
@@ -135,10 +135,10 @@ describe('sending a message', () => {
   it('replaces the empty state when sending the first message', async () => {
     const { user } = renderRoute('/conversations/3')
 
-    await user.type(await screen.findByRole('textbox', { name: 'Message to Elodie' }), 'Hi Elodie{Enter}')
+    await user.type(await screen.findByRole('textbox', { name: 'Message à Elodie' }), 'Hi Elodie{Enter}')
 
     expect(await screen.findByText('Hi Elodie')).toBeInTheDocument()
-    expect(screen.queryByRole('heading', { name: 'No messages yet' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Aucun message pour le moment' })).not.toBeInTheDocument()
   })
 
   it('limits the message length and warns when getting close to it', async () => {
@@ -150,7 +150,7 @@ describe('sending a message', () => {
     await user.click(composer)
     await user.paste('a'.repeat(MESSAGE_MAX_LENGTH - 50))
 
-    expect(screen.getByText('50 characters left')).toBeInTheDocument()
-    expect(composer).toHaveAccessibleDescription('50 characters left')
+    expect(screen.getByText('50 caractères restants')).toBeInTheDocument()
+    expect(composer).toHaveAccessibleDescription('50 caractères restants')
   })
 })

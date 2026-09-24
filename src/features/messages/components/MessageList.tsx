@@ -25,11 +25,11 @@ export function MessageList({ conversationId, currentUserId, participant }: Mess
 
   return (
     <>
-      {isPending && <Spinner label="Loading messages" className="flex-1" />}
+      {isPending && <Spinner label="Chargement des messages" className="flex-1" />}
 
       {isError && (
         <ErrorState
-          title="Messages unavailable"
+          title="Messages indisponibles"
           error={error}
           onRetry={() => void refetch()}
           isRetrying={isFetching}
@@ -38,12 +38,12 @@ export function MessageList({ conversationId, currentUserId, participant }: Mess
       )}
 
       {isSuccess && timeline.length === 0 && (
-        <EmptyState title="No messages yet" description={`Say hello to ${participant.nickname}!`} />
+        <EmptyState title="Aucun message pour le moment" description={`Dites bonjour à ${participant.nickname} !`} />
       )}
 
       {timeline.length > 0 && (
         <div ref={containerRef} onScroll={onScroll} className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
-          <ol role="log" aria-label={`Messages with ${participant.nickname}`} className="flex flex-col gap-2">
+          <ol role="log" aria-label={`Messages avec ${participant.nickname}`} className="flex flex-col gap-2">
             {timeline.map(({ key, outgoing, ...item }) => (
               <Fragment key={key}>
                 {item.startsNewDay && (
@@ -56,7 +56,7 @@ export function MessageList({ conversationId, currentUserId, participant }: Mess
                   timestamp={item.timestamp}
                   status={item.status}
                   isOwn={item.isOwn}
-                  authorName={item.isOwn ? 'You' : participant.nickname}
+                  authorName={item.isOwn ? 'Vous' : participant.nickname}
                   showAuthor={item.showAuthor}
                   onRetry={outgoing && (() => retry(outgoing))}
                   onDiscard={outgoing && (() => discard(outgoing.mutationId))}

@@ -48,7 +48,7 @@ export function MessageComposer({ conversationId, recipientName }: MessageCompos
     <form onSubmit={handleSubmit} className="shrink-0 border-t border-gray-200 px-4 py-3">
       <div className="flex items-end gap-2 rounded-3xl border border-gray-300 bg-white py-1.5 pr-1.5 pl-4 focus-within:border-brand focus-within:ring-1 focus-within:ring-brand">
         <label htmlFor={inputId} className="sr-only">
-          Message to {recipientName}
+          Message à {recipientName}
         </label>
         <textarea
           ref={textareaRef}
@@ -58,7 +58,7 @@ export function MessageComposer({ conversationId, recipientName }: MessageCompos
           onKeyDown={handleKeyDown}
           rows={1}
           maxLength={MESSAGE_MAX_LENGTH}
-          placeholder="Write a message"
+          placeholder="Écrire un message"
           aria-describedby={showCounter ? counterId : undefined}
           className="max-h-40 min-h-9 flex-1 resize-none bg-transparent py-1.5 outline-none field-sizing-content placeholder:text-gray-500"
         />
@@ -70,12 +70,12 @@ export function MessageComposer({ conversationId, recipientName }: MessageCompos
           <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5" fill="currentColor">
             <path d="M3.4 20.4l17.45-7.48a1 1 0 000-1.84L3.4 3.6a1 1 0 00-1.39 1.2L4.5 12l-2.49 7.2a1 1 0 001.39 1.2z" />
           </svg>
-          <span className="sr-only">Send message</span>
+          <span className="sr-only">Envoyer le message</span>
         </button>
       </div>
       {showCounter && (
         <p id={counterId} aria-live="polite" className="mt-1 px-4 text-right text-xs text-gray-600">
-          {remaining} characters left
+          {remaining} caractères restants
         </p>
       )}
     </form>

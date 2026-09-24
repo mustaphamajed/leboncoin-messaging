@@ -14,9 +14,9 @@ describe('NewConversation', () => {
   it('is reachable from the conversation list', async () => {
     const { user } = renderRoute('/')
 
-    await user.click(await screen.findByRole('link', { name: 'New conversation' }))
+    await user.click(await screen.findByRole('link', { name: 'Nouvelle conversation' }))
 
-    expect(await screen.findByRole('heading', { name: 'New conversation' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Nouvelle conversation' })).toBeInTheDocument()
   })
 
   it('lists the other users alphabetically and flags existing conversations', async () => {
@@ -25,8 +25,8 @@ describe('NewConversation', () => {
     const buttons = await findUserButtons()
 
     expect(buttons.map((button) => button.textContent)).toEqual([
-      'EElodieOpen conversation',
-      'JJeremieOpen conversation',
+      'EElodieOuvrir la conversation',
+      'JJeremieOuvrir la conversation',
       'PPatrick',
     ])
   })
@@ -34,14 +34,14 @@ describe('NewConversation', () => {
   it('filters users by nickname', async () => {
     const { user } = renderRoute('/conversations/new')
 
-    await user.type(await screen.findByRole('searchbox', { name: 'Search users' }), 'pat')
+    await user.type(await screen.findByRole('searchbox', { name: 'Rechercher un utilisateur' }), 'pat')
 
     expect((await findUserButtons()).map((button) => button.textContent)).toEqual(['PPatrick'])
 
     await user.clear(screen.getByRole('searchbox'))
     await user.type(screen.getByRole('searchbox'), 'zzz')
 
-    expect(await screen.findByText('No user matches “zzz”.')).toBeInTheDocument()
+    expect(await screen.findByText('Aucun utilisateur ne correspond à « zzz ».')).toBeInTheDocument()
   })
 
   it('opens the existing conversation instead of creating a duplicate', async () => {
@@ -56,7 +56,7 @@ describe('NewConversation', () => {
 
     await user.click(await screen.findByRole('button', { name: /Jeremie/ }))
 
-    expect(await screen.findByRole('log', { name: 'Messages with Jeremie' })).toBeInTheDocument()
+    expect(await screen.findByRole('log', { name: 'Messages avec Jeremie' })).toBeInTheDocument()
     expect(router.state.location.pathname).toBe('/conversations/1')
     expect(created).toBe(false)
   })
@@ -111,7 +111,7 @@ describe('NewConversation', () => {
 
     await user.click(await screen.findByRole('button', { name: /Patrick/ }))
 
-    expect(await screen.findByRole('alert')).toHaveTextContent('Could not start the conversation.')
+    expect(await screen.findByRole('alert')).toHaveTextContent('Impossible de démarrer la conversation.')
     expect(router.state.location.pathname).toBe('/conversations/new')
   })
 
@@ -120,9 +120,9 @@ describe('NewConversation', () => {
     const { user } = renderRoute('/conversations/new')
 
     const alert = await screen.findByRole('alert')
-    expect(alert).toHaveTextContent('Users unavailable')
+    expect(alert).toHaveTextContent('Utilisateurs indisponibles')
 
-    await user.click(within(alert).getByRole('button', { name: 'Try again' }))
+    await user.click(within(alert).getByRole('button', { name: 'Réessayer' }))
 
     expect(await screen.findByRole('button', { name: /Patrick/ })).toBeInTheDocument()
   })
@@ -131,8 +131,8 @@ describe('NewConversation', () => {
     server.use(http.get(apiUrl('/conversations/:userId'), () => HttpResponse.json([])))
     const { user } = renderRoute('/')
 
-    await user.click(await within(getSidebar()).findByRole('link', { name: 'Start a conversation' }))
+    await user.click(await within(getSidebar()).findByRole('link', { name: 'Démarrer une conversation' }))
 
-    expect(await screen.findByRole('heading', { name: 'New conversation' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Nouvelle conversation' })).toBeInTheDocument()
   })
 })

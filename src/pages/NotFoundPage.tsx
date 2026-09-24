@@ -4,13 +4,13 @@ import { EmptyState } from '@/components'
 export function NotFoundPage() {
   return (
     <main className="flex h-dvh">
-      <title>Page not found · leboncoin</title>
+      <title>Page introuvable · leboncoin</title>
       <EmptyState
-        title="Page not found"
-        description="The page you are looking for does not exist."
+        title="Page introuvable"
+        description="La page que vous cherchez n’existe pas."
         action={
           <Link to="/" className="font-medium text-brand underline-offset-4 hover:underline">
-            Go to messages
+            Aller aux messages
           </Link>
         }
       />

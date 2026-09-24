@@ -39,7 +39,7 @@ describe('ConversationList', () => {
   it('shows a loading state while fetching', async () => {
     renderRoute('/')
 
-    expect(within(getSidebar()).getByRole('status')).toHaveTextContent('Loading conversations')
+    expect(within(getSidebar()).getByRole('status')).toHaveTextContent('Chargement des conversations')
     await findConversationLinks()
   })
 
@@ -47,7 +47,7 @@ describe('ConversationList', () => {
     server.use(http.get(apiUrl('/conversations/:userId'), () => HttpResponse.json([])))
     renderRoute('/')
 
-    expect(await within(getSidebar()).findByRole('heading', { name: 'No conversations yet' })).toBeInTheDocument()
+    expect(await within(getSidebar()).findByRole('heading', { name: 'Aucune conversation pour le moment' })).toBeInTheDocument()
   })
 
   it('shows an error with a retry button when the server fails', async () => {
@@ -55,9 +55,9 @@ describe('ConversationList', () => {
     const { user } = renderRoute('/')
 
     const alert = await within(getSidebar()).findByRole('alert')
-    expect(alert).toHaveTextContent('Conversations unavailable')
+    expect(alert).toHaveTextContent('Conversations indisponibles')
 
-    await user.click(within(alert).getByRole('button', { name: 'Try again' }))
+    await user.click(within(alert).getByRole('button', { name: 'Réessayer' }))
 
     expect(await findConversationLinks()).toHaveLength(2)
   })

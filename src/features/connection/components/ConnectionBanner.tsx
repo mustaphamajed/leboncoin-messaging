@@ -5,11 +5,11 @@ import { useOnlineStatus } from '../hooks/useOnlineStatus'
 const BANNERS = {
   offline: {
     className: 'bg-gray-800 text-white',
-    message: 'You are offline. Your messages will be sent as soon as you are back online.',
+    message: 'Vous êtes hors ligne. Vos messages seront envoyés dès le retour de la connexion.',
   },
   degraded: {
     className: 'bg-amber-100 text-amber-900',
-    message: 'Our servers are having a hiccup. We keep retrying in the background, nothing is lost.',
+    message: 'Nos serveurs rencontrent un souci. Nous réessayons en arrière-plan, rien n’est perdu.',
   },
 }
 
@@ -19,7 +19,7 @@ export function ConnectionBanner() {
   const banner = !isOnline ? BANNERS.offline : apiHealth === 'degraded' ? BANNERS.degraded : null
 
   return (
-    <div role="status" aria-label="Connection status" aria-live="polite" className="shrink-0">
+    <div role="status" aria-label="État de la connexion" aria-live="polite" className="shrink-0">
       {banner && <p className={cn('px-4 py-2 text-center text-sm', banner.className)}>{banner.message}</p>}
     </div>
   )

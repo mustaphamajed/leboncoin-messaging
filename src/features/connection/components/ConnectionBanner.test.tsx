@@ -6,7 +6,7 @@ import { server } from '@/test/msw/server'
 import { apiUrl } from '@/test/msw/utils'
 import { renderRoute } from '@/test/renderRoute'
 
-const findBanner = () => screen.findByRole('status', { name: 'Connection status' })
+const findBanner = () => screen.findByRole('status', { name: 'État de la connexion' })
 
 describe('ConnectionBanner', () => {
   it('stays empty when everything works', async () => {
@@ -22,7 +22,7 @@ describe('ConnectionBanner', () => {
     const banner = await findBanner()
 
     act(() => onlineManager.setOnline(false))
-    expect(banner).toHaveTextContent('You are offline')
+    expect(banner).toHaveTextContent('Vous êtes hors ligne')
 
     act(() => onlineManager.setOnline(true))
     expect(banner).toBeEmptyDOMElement()
@@ -33,9 +33,9 @@ describe('ConnectionBanner', () => {
     const { user } = renderRoute('/')
     const banner = await findBanner()
 
-    expect(await within(banner).findByText(/servers are having a hiccup/)).toBeInTheDocument()
+    expect(await within(banner).findByText(/serveurs rencontrent un souci/)).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: 'Try again' }))
+    await user.click(screen.getByRole('button', { name: 'Réessayer' }))
 
     await expect.poll(() => banner.textContent).toBe('')
   })

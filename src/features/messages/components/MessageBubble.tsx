@@ -17,8 +17,8 @@ const statusConfig: Record<
   { bubbleClassName?: string; label?: string }
 > = {
   sent: {},
-  sending: { bubbleClassName: "opacity-70", label: "Sending…" },
-  waiting: { bubbleClassName: "opacity-70", label: "Waiting for connection…" },
+  sending: { bubbleClassName: "opacity-70", label: "Envoi…" },
+  waiting: { bubbleClassName: "opacity-70", label: "En attente de connexion…" },
   failed: { bubbleClassName: "ring-2 ring-red-600 ring-offset-1" },
 };
 
@@ -58,7 +58,7 @@ export function MessageBubble({
           bubbleClassName,
         )}
       >
-        <span className="sr-only">{isOwn ? "You" : authorName}: </span>
+        <span className="sr-only">{isOwn ? "Vous" : authorName} : </span>
         {body}
       </p>
 
@@ -75,12 +75,12 @@ export function MessageBubble({
       )}
       {status === "failed" && (
         <span className="mt-1 flex gap-3 px-1 text-xs text-red-700">
-          <span>Not sent.</span>
+          <span>Non envoyé.</span>
           <button type="button" onClick={onRetry} className={actionClassName}>
-            Retry
+            Renvoyer
           </button>
           <button type="button" onClick={onDiscard} className={actionClassName}>
-            Delete
+            Supprimer
           </button>
         </span>
       )}

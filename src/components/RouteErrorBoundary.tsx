@@ -10,21 +10,21 @@ export function RouteErrorBoundary() {
 
   return (
     <div role="alert" className="flex h-full flex-1 flex-col items-center justify-center gap-2 p-6 text-center">
-      <title>Something went wrong · leboncoin</title>
+      <title>Une erreur est survenue · leboncoin</title>
       <h2 className="text-lg font-semibold">
-        {isOutdatedVersion ? 'A new version is available' : 'Something went wrong'}
+        {isOutdatedVersion ? 'Une nouvelle version est disponible' : 'Une erreur est survenue'}
       </h2>
       <p className="max-w-sm text-sm text-gray-600">
         {isOutdatedVersion
-          ? 'Reload the page to get the latest version of the app.'
-          : 'An unexpected error occurred. Reloading the page usually fixes it.'}
+          ? 'Rechargez la page pour obtenir la dernière version de l’application.'
+          : 'Une erreur inattendue s’est produite. Recharger la page résout généralement le problème.'}
       </p>
       <button
         type="button"
         onClick={() => window.location.reload()}
         className="mt-2 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
       >
-        Reload the page
+        Recharger la page
       </button>
     </div>
   )

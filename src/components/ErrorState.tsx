@@ -20,7 +20,7 @@ export function ErrorState({ title, error, onRetry, isRetrying = false, classNam
           disabled={isRetrying}
           className="mt-2 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:opacity-60"
         >
-          {isRetrying ? 'Retrying…' : 'Try again'}
+          {isRetrying ? 'Nouvelle tentative…' : 'Réessayer'}
         </button>
       )}
     </div>

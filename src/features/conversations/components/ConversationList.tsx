@@ -10,11 +10,11 @@ export function ConversationList() {
 
   return (
     <>
-      {isPending && <Spinner label="Loading conversations" />}
+      {isPending && <Spinner label="Chargement des conversations" />}
 
       {isError && (
         <ErrorState
-          title="Conversations unavailable"
+          title="Conversations indisponibles"
           error={error}
           onRetry={() => void refetch()}
           isRetrying={isFetching}
@@ -23,11 +23,11 @@ export function ConversationList() {
 
       {isSuccess && conversations.length === 0 && (
         <EmptyState
-          title="No conversations yet"
-          description="Your conversations with other users will appear here."
+          title="Aucune conversation pour le moment"
+          description="Vos conversations avec les autres utilisateurs apparaîtront ici."
           action={
             <Link to="/conversations/new" className="font-medium text-brand underline-offset-4 hover:underline">
-              Start a conversation
+              Démarrer une conversation
             </Link>
           }
         />

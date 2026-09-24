@@ -62,19 +62,19 @@ export function NewConversation() {
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
-      <title>New conversation · leboncoin</title>
+      <title>Nouvelle conversation · leboncoin</title>
       <NewConversationHeader />
 
       <div className="shrink-0 px-4 py-3">
         <label htmlFor={searchId} className="sr-only">
-          Search users
+          Rechercher un utilisateur
         </label>
         <input
           id={searchId}
           type="search"
           value={search}
           onChange={(event) => setSearch(event.target.value)}
-          placeholder="Search users"
+          placeholder="Rechercher un utilisateur"
           autoComplete="off"
           className="w-full rounded-full border border-gray-300 px-4 py-2 outline-none placeholder:text-gray-500 focus:border-brand focus:ring-1 focus:ring-brand"
         />
@@ -82,15 +82,15 @@ export function NewConversation() {
 
       {createConversation.isError && (
         <p role="alert" className="mx-4 mb-2 rounded-md bg-red-50 px-4 py-2 text-sm text-red-800">
-          Could not start the conversation. {getErrorMessage(createConversation.error)}
+          Impossible de démarrer la conversation. {getErrorMessage(createConversation.error)}
         </p>
       )}
 
-      {isLoading && <Spinner label="Loading users" />}
+      {isLoading && <Spinner label="Chargement des utilisateurs" />}
 
       {hasLoadError && (
         <ErrorState
-          title="Users unavailable"
+          title="Utilisateurs indisponibles"
           error={users.error ?? conversations.error}
           onRetry={() => {
             void users.refetch()
@@ -101,11 +101,11 @@ export function NewConversation() {
       )}
 
       {isReady && !currentUser && (
-        <EmptyState title="Profile unavailable" description="We could not find your profile. Please try again later." />
+        <EmptyState title="Profil indisponible" description="Nous n’avons pas trouvé votre profil. Veuillez réessayer plus tard." />
       )}
 
       {isReady && currentUser && candidates.length === 0 && (
-        <EmptyState title="No user found" description={`No user matches “${search.trim()}”.`} />
+        <EmptyState title="Aucun utilisateur trouvé" description={`Aucun utilisateur ne correspond à « ${search.trim()} ».`} />
       )}
 
       {isReady && currentUser && candidates.length > 0 && (

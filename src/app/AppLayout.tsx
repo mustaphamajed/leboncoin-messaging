@@ -12,7 +12,7 @@ export function AppLayout() {
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:shadow-md"
       >
-        Skip to main content
+        Aller au contenu principal
       </a>
 
       <header className="flex h-14 shrink-0 items-center gap-3 border-b border-gray-200 px-4">
@@ -48,7 +48,7 @@ export function AppLayout() {
               >
                 <path strokeLinecap="round" d="M12 5v14M5 12h14" />
               </svg>
-              New conversation
+              Nouvelle conversation
             </Link>
           </div>
           <ConversationList />

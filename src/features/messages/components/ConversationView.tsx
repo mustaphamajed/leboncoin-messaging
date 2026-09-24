@@ -14,11 +14,11 @@ export function ConversationView({ conversationId }: { conversationId: number })
 
   return (
     <>
-      {isPending && <Spinner label="Loading conversation" className="flex-1" />}
+      {isPending && <Spinner label="Chargement de la conversation" className="flex-1" />}
 
       {isError && (
         <ErrorState
-          title="Conversation unavailable"
+          title="Conversation indisponible"
           error={error}
           onRetry={() => void refetch()}
           isRetrying={isFetching}

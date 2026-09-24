@@ -1,44 +1,34 @@
 import { http, HttpResponse } from 'msw'
-import { setupServer } from 'msw/node'
-import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { ZodError } from 'zod'
-import { API_URL } from '../httpClient'
+import { conversations } from '@/test/fixtures'
+import { server } from '@/test/msw/server'
+import { apiUrl } from '@/test/msw/utils'
 import { createConversation, getConversations } from './conversation.service'
 
-const server = setupServer()
-beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
-afterEach(() => server.resetHandlers())
-afterAll(() => server.close())
-
-const url = (path: string) => `${API_URL}${path}`
-
-const conversations = [
-  { id: 1, senderId: 1, senderNickname: 'Thibaut', recipientId: 2, recipientNickname: 'Jeremie', lastMessageTimestamp: 1625637849 },
-  { id: 3, senderId: 3, senderNickname: 'Patrick', recipientId: 1, recipientNickname: 'Thibaut', lastMessageTimestamp: 1620284667 },
-]
 
 describe('getConversations', () => {
   it("returns the user's conversations", async () => {
-    server.use(http.get(url('/conversations/1'), () => HttpResponse.json(conversations)))
+    server.use(http.get(apiUrl('/conversations/1'), () => HttpResponse.json(conversations)))
 
     await expect(getConversations(1)).resolves.toEqual(conversations)
   })
 
   it('returns an empty list when the API answers 404', async () => {
-    server.use(http.get(url('/conversations/1'), () => new HttpResponse(null, { status: 404 })))
+    server.use(http.get(apiUrl('/conversations/1'), () => new HttpResponse(null, { status: 404 })))
 
     await expect(getConversations(1)).resolves.toEqual([])
   })
 
   it('propagates server errors', async () => {
-    server.use(http.get(url('/conversations/1'), () => new HttpResponse(null, { status: 503 })))
+    server.use(http.get(apiUrl('/conversations/1'), () => new HttpResponse(null, { status: 503 })))
 
     await expect(getConversations(1)).rejects.toMatchObject({ kind: 'http', status: 503 })
   })
 
   it('rejects conversations with a missing field', async () => {
     const incomplete = { ...conversations[0], recipientNickname: undefined }
-    server.use(http.get(url('/conversations/1'), () => HttpResponse.json([incomplete])))
+    server.use(http.get(apiUrl('/conversations/1'), () => HttpResponse.json([incomplete])))
 
     await expect(getConversations(1)).rejects.toMatchObject({ kind: 'invalid-response' })
   })
@@ -59,7 +49,7 @@ describe('createConversation', () => {
   it('posts the full conversation and rebuilds it from the returned id', async () => {
     let body: unknown
     server.use(
-      http.post(url('/conversations/1'), async ({ request }) => {
+      http.post(apiUrl('/conversations/1'), async ({ request }) => {
         body = await request.json()
         return HttpResponse.json({ id: 42 })
       }),

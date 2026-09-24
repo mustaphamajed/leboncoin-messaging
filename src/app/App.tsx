@@ -1,11 +1,14 @@
+import { createBrowserRouter } from 'react-router'
+import { RouterProvider } from 'react-router/dom'
 import { AppProviders } from './providers'
+import { routes } from './routes'
+
+const router = createBrowserRouter(routes)
 
 export function App() {
   return (
     <AppProviders>
-      <main className="flex h-full items-center justify-center">
-        <h1 className="text-2xl font-semibold text-brand">Messages</h1>
-      </main>
+      <RouterProvider router={router} />
     </AppProviders>
   )
 }

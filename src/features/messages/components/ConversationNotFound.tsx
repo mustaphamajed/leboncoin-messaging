@@ -1,5 +1,4 @@
-import { Link } from 'react-router'
-import { EmptyState } from '@/components'
+import { EmptyState, TextLink } from '@/components'
 
 export function ConversationNotFound() {
   return (
@@ -9,9 +8,9 @@ export function ConversationNotFound() {
         title="Conversation introuvable"
         description="Cette conversation n’existe pas ou le lien est invalide."
         action={
-          <Link to="/" className="font-medium text-brand underline-offset-4 hover:underline">
+          <TextLink to="/">
             Retour aux conversations
-          </Link>
+          </TextLink>
         }
       />
     </>

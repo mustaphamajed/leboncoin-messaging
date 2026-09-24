@@ -1,5 +1,4 @@
-import { Link } from 'react-router'
-import { EmptyState } from '@/components'
+import { EmptyState, TextLink } from '@/components'
 
 export function NotFoundPage() {
   return (
@@ -9,9 +8,9 @@ export function NotFoundPage() {
         title="Page introuvable"
         description="La page que vous cherchez n’existe pas."
         action={
-          <Link to="/" className="font-medium text-brand underline-offset-4 hover:underline">
+          <TextLink to="/">
             Aller aux messages
-          </Link>
+          </TextLink>
         }
       />
     </main>

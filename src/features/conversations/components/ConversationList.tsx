@@ -1,5 +1,4 @@
-import { Link } from 'react-router'
-import { EmptyState, ErrorState, Spinner } from '@/components'
+import { EmptyState, ErrorState, Spinner, TextLink } from '@/components'
 import { useCurrentUserId } from '@/context'
 import { useConversations } from '../hooks/useConversations'
 import { ConversationItem } from './ConversationItem'
@@ -26,9 +25,9 @@ export function ConversationList() {
           title="Aucune conversation pour le moment"
           description="Vos conversations avec les autres utilisateurs apparaîtront ici."
           action={
-            <Link to="/conversations/new" className="font-medium text-brand underline-offset-4 hover:underline">
+            <TextLink to="/conversations/new">
               Démarrer une conversation
-            </Link>
+            </TextLink>
           }
         />
       )}

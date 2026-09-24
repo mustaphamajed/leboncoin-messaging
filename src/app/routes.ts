@@ -13,6 +13,11 @@ export const routes: RouteObject[] = [
     children: [
       { index: true, Component: SelectConversationPage },
       {
+        path: 'conversations/new',
+        ErrorBoundary: RouteErrorBoundary,
+        lazy: async () => ({ Component: (await import('@/pages/NewConversationPage')).NewConversationPage }),
+      },
+      {
         path: 'conversations/:conversationId',
         ErrorBoundary: RouteErrorBoundary,
         lazy: async () => ({ Component: (await import('@/pages/ConversationPage')).ConversationPage }),

@@ -13,6 +13,7 @@ afterEach(() => {
   cleanup()
   server.resetHandlers()
   resetDb()
+  localStorage.clear()
   onlineManager.setOnline(true);
 })
 

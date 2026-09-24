@@ -18,5 +18,18 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: ['@/services/*', '@/lib/*', '@/components/*', '@/context/*', '@/features/*/*'],
+              message: 'Import from the folder index (e.g. "@/services" or "@/features/messages") instead of a deep path.',
+            },
+          ],
+        },
+      ],
+    },
   },
 ])

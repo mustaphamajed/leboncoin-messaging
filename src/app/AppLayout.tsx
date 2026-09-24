@@ -1,5 +1,6 @@
 import { Link, Outlet, useMatch } from 'react-router'
-import { ConversationList } from "@/features/conversations";
+import { ConnectionBanner } from '@/features/connection'
+import { ConversationList } from '@/features/conversations'
 import { cn } from '@/lib'
 
 export function AppLayout() {
@@ -20,6 +21,8 @@ export function AppLayout() {
         </Link>
         <h1 className="text-lg font-semibold">Messages</h1>
       </header>
+
+      <ConnectionBanner />
 
       <div className="flex min-h-0 flex-1">
         <aside

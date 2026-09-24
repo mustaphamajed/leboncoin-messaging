@@ -1,5 +1,9 @@
 import axios, { type AxiosRequestConfig } from 'axios'
 import type { z } from 'zod'
+import {
+  installFailureSimulation,
+  parseFailureRate,
+} from "./failureSimulation";
 
 export const API_URL = (import.meta.env.VITE_API_URL ?? 'http://localhost:3005').replace(/\/+$/, '')
 
@@ -37,6 +41,13 @@ const axiosInstance = axios.create({
   timeout: DEFAULT_TIMEOUT_MS,
   headers: { Accept: 'application/json' },
 })
+
+if (import.meta.env.DEV) {
+  installFailureSimulation(
+    axiosInstance,
+    parseFailureRate(import.meta.env.VITE_SIMULATED_FAILURE_RATE),
+  );
+}
 
 function toApiError(error: unknown): unknown {
   if (axios.isCancel(error) || !axios.isAxiosError(error)) return error

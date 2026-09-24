@@ -10,7 +10,14 @@ export const routes: RouteObject[] = [
     Component: AppLayout,
     HydrateFallback: FullPageSpinner,
     ErrorBoundary: RouteErrorBoundary,
-    children: [{ index: true, Component: SelectConversationPage }],
+    children: [
+      { index: true, Component: SelectConversationPage },
+      {
+        path: 'conversations/:conversationId',
+        ErrorBoundary: RouteErrorBoundary,
+        lazy: async () => ({ Component: (await import('@/pages/ConversationPage')).ConversationPage }),
+      },
+    ],
   },
   { path: '*', Component: NotFoundPage },
 ]

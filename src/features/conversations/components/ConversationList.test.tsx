@@ -61,4 +61,13 @@ describe('ConversationList', () => {
 
     expect(await findConversationLinks()).toHaveLength(2)
   })
+
+  it('opens the conversation on click and marks it as current', async () => {
+    const { user } = renderRoute('/')
+
+    await user.click(await within(getSidebar()).findByRole('link', { name: /Jeremie/ }))
+
+    expect(await screen.findByRole('heading', { name: 'Jeremie' })).toBeInTheDocument()
+    expect(within(getSidebar()).getByRole('link', { name: /Jeremie/ })).toHaveAttribute('aria-current', 'page')
+  })
 })

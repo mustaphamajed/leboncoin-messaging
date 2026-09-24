@@ -1,4 +1,5 @@
 import { cn, getErrorMessage } from '@/lib'
+import { Button } from './Button'
 
 interface ErrorStateProps {
   title: string
@@ -14,14 +15,9 @@ export function ErrorState({ title, error, onRetry, isRetrying = false, classNam
       <h3 className="font-semibold">{title}</h3>
       <p className="max-w-sm text-sm text-gray-600">{getErrorMessage(error)}</p>
       {onRetry && (
-        <button
-          type="button"
-          onClick={onRetry}
-          disabled={isRetrying}
-          className="mt-2 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:opacity-60"
-        >
+        <Button onClick={onRetry} disabled={isRetrying} className="mt-2">
           {isRetrying ? 'Nouvelle tentative…' : 'Réessayer'}
-        </button>
+        </Button>
       )}
     </div>
   )

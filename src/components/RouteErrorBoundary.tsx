@@ -1,4 +1,5 @@
 import { useRouteError } from 'react-router'
+import { Button } from './Button'
 
 const CHUNK_LOAD_ERROR = /dynamically imported module|Importing a module script failed|Loading chunk/i
 
@@ -19,13 +20,9 @@ export function RouteErrorBoundary() {
           ? 'Rechargez la page pour obtenir la dernière version de l’application.'
           : 'Une erreur inattendue s’est produite. Recharger la page résout généralement le problème.'}
       </p>
-      <button
-        type="button"
-        onClick={() => window.location.reload()}
-        className="mt-2 rounded-full bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-      >
+      <Button onClick={() => window.location.reload()} className="mt-2">
         Recharger la page
-      </button>
+      </Button>
     </div>
   )
 }
